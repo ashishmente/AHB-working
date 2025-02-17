@@ -1,0 +1,31 @@
+curl -X POST "https://partners.sit.dtp.alhilalbankuaedev.ae/am/partner/oauth2/token" \
+     -H "x-jws-signature: value" \
+     -H "Content-Type: application/x-www-form-urlencoded" \
+     -H "Cache-Control: no-cache" \
+     --data-urlencode "grant_type=authorization_code" \
+     --data-urlencode "code=371f8de4-db0d-423d-be37-0e6988b7f8ea.fe2e985e-0f69-40f4-817d-c193baa839f7.795c9507-35e9-4234-8684-bdb2fe4c86c8" \
+     --data-urlencode "redirect_uri=app://check-bank-sca" \
+     --data-urlencode "client_assertion_type=urn:ietf:params:oauth:client-assertion-type:jwt-bearer" \
+     --data-urlencode "client_assertion=eyJraWQiOiJKWHYwMXhuNW83eDFuTXB1SVV1Q1gyNDdPbnhMMGdMeGV2VUFnLW0xbjdvIiwidHlwIjoiSldUIiwiYWxnIjoiUlMyNTYifQ.eyJzdWIiOiJHVjRKa2RkdUFLekpoZzRyRElvd2lKeVgwaklzTFN2RCIsImF1ZCI6Imh0dHBzOlwvXC9hdXRoLmFpYnRlc3QuaWUiLCJpc3MiOiJHVjRKa2RkdUFLekpoZzRyRElvd2lKeVgwaklzTFN2RCIsImV4cCI6MTY1ODkyMjMwNCwiaWF0IjoxNjU4OTIyMDA0LCJqdGkiOiIzMDM4ZjFmMC1jOTlhLTQwNGUtOTVmMy0zYjE1ZWY1N2ExZGIifQ.bNxfJFGLMUYF0oaS4GyCydARheIsULapv999CZifxxIetvAYpclaxjefiexCCetYcPwBLKHUIzBf20rQUQM25WQh2yW1_YNpnNOnuDBZYkgEY5F88bF1204_pxhg6_ZJVwQx3W48FL9ykubfdF3TWOorgY8hjfN4ez3AaX1JyCntt2_R_xxL6waGHRz_fawfgoNCNWJLrGbMBO_K5_rD0_j3eotcb96zkECl6HHcGDCDWyQp4CgdEoM_sfs6wLH2N19ztaRXSecJTMauvOqLZEk2WQ15R6ZowbV4w8xv2-3D1Q6GYXjvfux9UIkmzvEyBf8uexTNuBl7x16bHIz2g" \
+     --data-urlencode "client_id=GV4JkdduAKzJhg4rDIowiJyX0jIsLSvD"
+
+curl -X GET "https://partners.sit.dtp.alhilalbankuaedev.ae/sas/v1/customer/{id}" \
+     -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \
+     -H "Ocp-Apim-Subscription-Key: YOUR_SUBSCRIPTION_KEY" \
+     -H "Cache-Control: no-cache"
+
+  curl -X POST "http://partners.sit.dtp.alhilalbankuaedev.ae/sas/v1/agent-decisions" \
+     -H "Content-Type: application/json" \
+     -H "Cache-Control: no-cache" \
+     -H "Ocp-Apim-Subscription-Key: YOUR_SUBSCRIPTION_KEY" \
+     -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \
+     -d '{
+          "transactionType": "Onboarding",
+          "eventName": "fraud-transaction-false-positive",
+          "action": "casa-account-unfreeze",
+          "customerID": "12345",
+          "cif": "6610939",
+          "uniqueMessageID": "msg-12345",
+          "dateAndTime": "2024-11-13T03:30:00Z",
+          "score": 90
+        }'
