@@ -1,0 +1,24 @@
+curl -I https://api.cit.dtp.alhilalbankuaedev.ae/sas/v1/customers
+curl -I https://api.cit.dtp.alhilalbankuaedev.ae/sas/v1/agent-decisions
+curl -I https://api.dev.dtp.alhilalbankuaedev.ae/sas/v1/customers
+curl -I https://api.dev.dtp.alhilalbankuaedev.ae/sas/v1/agent-decisions
+curl -I https://api.sit.dtp.alhilalbankuaedev.ae/sas/v1/customers
+curl -I https://api.sit.dtp.alhilalbankuaedev.ae/sas/v1/agent-decisions
+curl -I https://api.nft.dtp.alhilalbankuaedev.ae/sas/v1/customers
+curl -I https://api.nft.dtp.alhilalbankuaedev.ae/sas/v1/agent-decisions
+curl -v https://api.cit.dtp.alhilalbankuaedev.ae/sas/v1/customers
+curl -v https://api.cit.dtp.alhilalbankuaedev.ae/sas/v1/agent-decisions
+curl -v https://api.dev.dtp.alhilalbankuaedev.ae/sas/v1/customers
+curl -v https://api.dev.dtp.alhilalbankuaedev.ae/sas/v1/agent-decisions
+curl -v https://api.sit.dtp.alhilalbankuaedev.ae/sas/v1/customers
+curl -v https://api.sit.dtp.alhilalbankuaedev.ae/sas/v1/agent-decisions
+curl -v https://api.nft.dtp.alhilalbankuaedev.ae/sas/v1/customers
+curl -v https://api.nft.dtp.alhilalbankuaedev.ae/sas/v1/agent-decisions
+telnet api.cit.dtp.alhilalbankuaedev.ae 443
+telnet api.dev.dtp.alhilalbankuaedev.ae 443
+telnet api.sit.dtp.alhilalbankuaedev.ae 443
+telnet api.nft.dtp.alhilalbankuaedev.ae 443
+ping api.cit.dtp.alhilalbankuaedev.ae
+ping api.dev.dtp.alhilalbankuaedev.ae
+ping api.sit.dtp.alhilalbankuaedev.ae
+ping api.nft.dtp.alhilalbankuaedev.ae
