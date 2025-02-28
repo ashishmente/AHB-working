@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entityResponse xmlns="urn:SASFraudManagement:RTF_3_2" entityType="entityType">
+	<entityID>${/entityRequest/entityID}</entityID>
+	<contactID>${/entityRequest/contactID}</contactID>
+	<contactType>${/entityRequest/contactType}</contactType>
+	<multiOrg>${/entityRequest/multiOrg}</multiOrg>
+
+	<blockGroupCode/>
+
+	<detailGroup name="demographic">
+		<detail name="CUSTOMER ID">${CUSTOMER_ID}</detail>
+		<detail name="DOB">${DOB}</detail>
+		<detail name="GENDER">${GENDER}</detail>
+		<detail name="NATIONALITY">${NATIONALITY}</detail>
+		<detail name="DUAL NATIONALITY">${DUAL_NATIONALITY}</detail>
+		<detail name="CUSTOMER STATUS">${CUSTOMER_STATUS}</detail>
+		<detail name="CUSTOMER STATE">${CUSTOMER_STATE}</detail>
+		<detail name="CUSTOMER TYPE">${CUSTOMER_TYPE}</detail>
+		<detail name="AGE GROUP">${AGE_GROUP}</detail>
+		<detail name="ONBOARDED BY">${ONBOARDED_BY}</detail>
+		<detail name="CUSTOMER SEGMENT">${CUSTOMER_SEGMENT}</detail>
+		<detail name="CUSTOMER DOCUMENT NUMBER">${CUSTOMER_DOCUMENT_NUMBER}</detail>
+		<detail name="COUNTRY OF BIRTH">${COUNTRY_OF_BIRTH}</detail>
+		<detail name="CITY OF BIRTH">${CITY_OF_BIRTH}</detail>
+		<detail name="NATIONALITY FULL NAME">${NATIONALITY_FULL_NAME}</detail>
+		<detail name="COUNTRY OF BIRTH FULL NAME">${COUNTRY_OF_BIRTH_FULL_NAME}</detail>
+		<detail name="ADDRESS LINE 1">${ADDRESS_LINE}</detail>
+		<detail name="ADDRESS LINE 2">${ADDRESS_LINE_2}</detail>
+		<detail name="CITY">${TOWN_NAME}</detail>
+		<detail name="POSTAL CODE">${POSTAL_CODE}</detail>
+		<detail name="COUNTRY">${ADDRESS_COUNTRY}</detail>
+		<detail name="DEPARTMENT">${DEPARTMENT}</detail>
+		<detail name="SUB DEPARTMENT">${SUB_DEPARTMENT}</detail>
+		<detail name="BUILDING NUMBER">${BUILDING_NUMBER}</detail>
+		<detail name="STREET NAME">${STREET_NAME}</detail>
+		<detail name="COUNTRY SUB DIVISION">${COUNTRY_SUB_DIVISION}</detail>
+		<detail name="CIF">${CIF}</detail>
+		<detail name="ACCOUNT PURPOSE CODE">${ACCOUNT_PURPOSE_CODE}</detail>
+		<detail name="TRANSACTIONS PER MONTH">${TRANSACTIONS_PER_MONTH_CODE}</detail>
+		<detail name="CUSTOMER STATUS REASON">${CUSTOMER_STATUS_REASON}</detail>
+		<detail name="EID STATUS">${EID_STATUS}</detail>
+		<detail name="INVALID EID REASON">${INVALID_EID_REASON}</detail>
+		<detail name="CUSTOMER MIGRATION STATUS">${CUSTOMER_MIGRATION_STATUS}</detail>
+		<detail name="LAST KYC DATE">${LAST_KYC_DATE}</detail>
+		<detail name="NEXT KYC DATE">${NEXT_KYC_DATE}</detail>
+		<detail name="VERIFICATION METHOD">${VERIFICATION_METHOD}</detail>
+		<detail name="OVERALL RISK RATING">${OVERALL_RISK_RATING}</detail>
+		<detail name="IS EXPOSED">${IS_EXPOSED}</detail>
+		<detail name="ROLE CODE">${ROLE_CODE}</detail>
+		<detail name="IS ELIGIBLE">${IS_ELIGIBLE}</detail>
+		<detail name="IS ADDITIONAL INCOME">${IS_ADDITIONAL_INCOME}</detail>
+		<detail name="IS DUAL NATIONAL">${IS_DUAL_NATIONAL}</detail>
+		<detail name="FULL NAME">${FULL_NAME}</detail>
+		<detail name="FIRST NAME">${FIRST_NAME}</detail>
+		<detail name="LAST NAME">${LAST_NAME}</detail>
+		<detail name="PREFERRED NAME">${PREFERRED_NAME}</detail>
+		<detail name="EMAIL">${EMAIL}</detail>
+		<detail name="EMAIL STATE">${EMAIL_STATE}</detail>
+		<detail name="MOBILE NUMBER">${MOBILE_NUMBER}</detail>
+		<detail name="HOME PHONE">${HOME_PHONE}</detail>
+		<detail name="WORK PHONE">${WORK_PHONE}</detail>
+	</detailGroup>
+
+	<systemBlock1/>
+	<systemBlock2/>
+	<transactionBlock/>
+</entityResponse>
