@@ -25,7 +25,7 @@ ping api.nft.dtp.alhilalbankuaedev.ae
 6fd1b3f5-87a4-309e-b80c-ca1ac7abd7c2
 
 
-curl -X POST "https://api.cit.dtp.alhilalbankuaedev.ae/sas/v1/agent-decisions" \
+curl -X POST "https://api.sit.dtp.alhilalbankuaedev.ae/sas/v1/agent-decisions" \
      -H "Content-Type: application/json" \
      -H "Accept: application/json" \
      -d '{
