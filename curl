@@ -39,3 +39,17 @@ curl -X POST "https://api.sit.dtp.alhilalbankuaedev.ae/sas/v1/agent-decisions" \
            "score": 90
          }'
 
+
+curl -X POST "https://api.sit.dtp.alhilalbankuaedev.ae/sas/v1/agent-decisions" \
+     -H "Content-Type: application/json" \
+     -H "Accept: application/json" \
+     -d '{
+           "transactionType": "Onboarding",
+           "eventName": "fraud-transaction-false-positive",
+           "action": "casa-account-unfreeze",
+           "customerID": "6fd1b3f5-87a4-309e-b80c-ca1ac7abd7c2",
+           "cif": "6610939",
+           "uniqueMessageID": "msg-12345",
+           "dateAndTime": "2024-11-13T03:30:00Z",
+           "score": 90
+         }'
