@@ -8,3 +8,4 @@ keytool -import -trustcacerts -keystore truststore.jks -storepass changeit -file
 Alhilal#342025
 System.setProperty("java.net.useSystemProxies", "false");
 .proxy(ProxySelector.of(Proxy.NO_PROXY))
+openssl s_client -connect <your-server>:443 -showcerts
