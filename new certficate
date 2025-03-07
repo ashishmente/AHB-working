@@ -3,3 +3,4 @@ openssl pkcs12 -in /path/to/your_keystore.p12 -clcerts -nokeys -out client_cert.
 
 keytool -list -v -keystore mycert.p12 -storetype PKCS12
 keytool -importkeystore -srckeystore mycert.p12 -srcstoretype PKCS12 -destkeystore truststore.jks -deststoretype JKS
+Alhilal#342025
