@@ -6,3 +6,5 @@ keytool -importkeystore -srckeystore mycert.p12 -srcstoretype PKCS12 -destkeysto
 keytool -import -trustcacerts -keystore truststore.jks -storepass changeit -file server-cert.pem -alias server-cert
 
 Alhilal#342025
+System.setProperty("java.net.useSystemProxies", "false");
+.proxy(ProxySelector.of(Proxy.NO_PROXY))
