@@ -10,3 +10,4 @@ System.setProperty("java.net.useSystemProxies", "false");
 .proxy(ProxySelector.of(Proxy.NO_PROXY))
 openssl s_client -connect <your-server>:443 -showcerts
 f6585256-c0e4-3867-8ed4-30005d25d3f0
+2987b154-9c93-32e1-bc89-5bb2e842974b
