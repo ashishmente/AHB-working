@@ -14,3 +14,46 @@ f6585256-c0e4-3867-8ed4-30005d25d3f0
 map.put("IS_ELIGIBLE", jsonObject.opt("FinancialProductEligible") != JSONObject.NULL ? String.valueOf(jsonObject.opt("FinancialProductEligible")) : "");
 map.put("IS_ADDITIONAL_INCOME", jsonObject.opt("IsAdditionalIncome") != JSONObject.NULL ? String.valueOf(jsonObject.opt("IsAdditionalIncome")) : "");
 map.put("IS_DUAL_NATIONAL", jsonObject.opt("IsDualNational") != JSONObject.NULL ? String.valueOf(jsonObject.opt("IsDualNational")) : "");
+
+JSONObject ped = jsonObject.optJSONObject("PoliticallyExposedDetails");
+if (ped != null) {
+    map.put("IS_EXPOSED", String.valueOf(ped.optBoolean("IsExposed", false)));
+    map.put("ROLE_CODE", ped.opt("RoleCode") != JSONObject.NULL ? ped.optString("RoleCode", "") : "");
+} else {
+    // Ensure empty values if missing
+    map.put("IS_EXPOSED", "");
+    map.put("ROLE_CODE", "");
+}
+
+// Account Opening Details
+JSONObject aod = jsonObject.optJSONObject("AccountOpeningDetails");
+if (aod != null) {
+    map.put("ACCOUNT_PURPOSE_CODE", aod.opt("AccountPurposeCode") != JSONObject.NULL ? aod.optString("AccountPurposeCode", "") : "");
+    map.put("TRANSACTIONS_PER_MONTH_CODE", aod.opt("TransactionsPerMonthCode") != JSONObject.NULL ? aod.optString("TransactionsPerMonthCode", "") : "");
+} else {
+    // Ensure empty values if missing
+    map.put("ACCOUNT_PURPOSE_CODE", "");
+    map.put("TRANSACTIONS_PER_MONTH_CODE", "");
+}
+
+JSONObject address = jsonObject.optJSONObject("Address");
+if (address != null) {
+    map.put("DEPARTMENT", address.opt("Department") != JSONObject.NULL ? address.optString("Department", "") : "");
+    map.put("SUB_DEPARTMENT", address.opt("SubDepartment") != JSONObject.NULL ? address.optString("SubDepartment", "") : "");
+    map.put("BUILDING_NUMBER", address.opt("BuildingNumber") != JSONObject.NULL ? address.optString("BuildingNumber", "") : "");
+    map.put("STREET_NAME", address.opt("StreetName") != JSONObject.NULL ? address.optString("StreetName", "") : "");
+    map.put("TOWN_NAME", address.opt("TownName") != JSONObject.NULL ? address.optString("TownName", "") : "");
+    map.put("ADDRESS_COUNTRY", address.opt("Country") != JSONObject.NULL ? address.optString("Country", "") : "");
+    map.put("POSTAL_CODE", address.opt("PostalCode") != JSONObject.NULL ? address.optString("PostalCode", "") : "");
+    map.put("COUNTRY_SUB_DIVISION", address.opt("CountrySubDivision") != JSONObject.NULL ? address.optString("CountrySubDivision", "") : "");
+} else {
+    // Set empty values if Address object is missing
+    map.put("DEPARTMENT", "");
+    map.put("SUB_DEPARTMENT", "");
+    map.put("BUILDING_NUMBER", "");
+    map.put("STREET_NAME", "");
+    map.put("TOWN_NAME", "");
+    map.put("ADDRESS_COUNTRY", "");
+    map.put("POSTAL_CODE", "");
+    map.put("COUNTRY_SUB_DIVISION", "");
+}
