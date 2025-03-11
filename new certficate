@@ -57,3 +57,23 @@ if (address != null) {
     map.put("POSTAL_CODE", "");
     map.put("COUNTRY_SUB_DIVISION", "");
 }
+
+
+JSONArray addressLineArray = address.optJSONArray("AddressLine");
+if (addressLineArray != null && addressLineArray.length() > 0) {
+    StringBuilder addressLineBuilder = new StringBuilder();
+
+    for (int i = 0; i < addressLineArray.length(); i++) {
+        if (i > 0) {
+            addressLineBuilder.append(", "); // Separator between address lines
+        }
+        addressLineBuilder.append(addressLineArray.getString(i));
+    }
+
+    // Store the concatenated address lines
+    map.put("ADDRESS_LINE", addressLineBuilder.toString());
+} else {
+    // Store empty value if AddressLine array is missing or empty
+    map.put("ADDRESS_LINE", "");
+}
+
