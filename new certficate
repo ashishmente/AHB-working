@@ -11,3 +11,6 @@ System.setProperty("java.net.useSystemProxies", "false");
 openssl s_client -connect <your-server>:443 -showcerts
 f6585256-c0e4-3867-8ed4-30005d25d3f0
 2987b154-9c93-32e1-bc89-5bb2e842974b
+map.put("IS_ELIGIBLE", jsonObject.opt("FinancialProductEligible") != JSONObject.NULL ? String.valueOf(jsonObject.opt("FinancialProductEligible")) : "");
+map.put("IS_ADDITIONAL_INCOME", jsonObject.opt("IsAdditionalIncome") != JSONObject.NULL ? String.valueOf(jsonObject.opt("IsAdditionalIncome")) : "");
+map.put("IS_DUAL_NATIONAL", jsonObject.opt("IsDualNational") != JSONObject.NULL ? String.valueOf(jsonObject.opt("IsDualNational")) : "");
