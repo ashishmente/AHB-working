@@ -1,0 +1,22 @@
+curl -I "https://api.cit.dtp.alhilalbankuaedev.ae/sas/v1/agent-decisions"
+
+  curl -X POST "https://api.cit.dtp.alhilalbankuaedev.ae/sas/v1/agent-decisions" \
+     -H "Content-Type: application/json" \
+     -d '{
+          "alertId": "string",  
+          "customerId": "string",
+          "transactionid": "string",
+          "actionCodes": ["9", "2"],
+          "accounts": [
+            {
+              "accountNumber": "string",
+              "amount": 1000.50
+            }
+          ],
+          "cards": [
+            {
+              "cardNumber": "string",
+              "cardType": "string"
+            }
+          ]
+        }'
