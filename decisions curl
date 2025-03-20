@@ -20,3 +20,41 @@ curl -I "https://api.cit.dtp.alhilalbankuaedev.ae/sas/v1/agent-decisions"
             }
           ]
         }'
+
+
+curl -X POST "https://api.cit.dtp.alhilalbankuaedev.ae/sas/v1/agent-decisions" \
+     -H "Content-Type: application/json" \
+     -d '{
+          "alertId": "123456789",
+          "agentId": "agent@sas.com",
+          "transactionId": "345123457",
+          "transactionType": "Onboarding",
+          "eventName": "fraud-transaction-false-positive",
+          "actionCodes": [
+            "8",
+            "9"
+          ],
+          "customerID": "12345",
+          "cif": "6610939",
+          "uniqueMessageID": "msg-12345",
+          "accounts": [
+            {
+              "accountNumber": "string",
+              "amount": 0
+            }
+          ],
+          "cards": [
+            {
+              "cardNumber": "string",
+              "cardType": "string"
+            }
+          ],
+          "dateAndTime": "2024-11-13T03:30:00.0000000+00:00",
+          "score": 90,
+          "additionalFields": [
+            {
+              "name": "string",
+              "value": "string"
+            }
+          ]
+        }'
