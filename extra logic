@@ -1,0 +1,39 @@
+try
+		{
+
+			doc.getDocumentElement().normalize();
+			NodeList nList = doc.getElementsByTagName("ecmi");
+			Node nNode = nList.item(0);
+			
+				Element eElement = (Element) nNode;
+				username = (eElement.getElementsByTagName("username")).item(0).getTextContent();
+				event = (eElement.getElementsByTagName("event")).item(0).getTextContent();
+				id = (eElement.getElementsByTagName("id")).item(0).getTextContent();
+				type = (eElement.getElementsByTagName("type")).item(0).getTextContent();
+				
+				createTimestamp = (eElement.getElementsByTagName("createTimestamp")).item(0).getTextContent();
+				entityID = (eElement.getElementsByTagName("entityID")).item(0).getTextContent();
+				contactID = (eElement.getElementsByTagName("contactID")).item(0).getTextContent();
+				contactType = (eElement.getElementsByTagName("contactType")).item(0).getTextContent();
+				multiOrg = (eElement.getElementsByTagName("multiOrg")).item(0).getTextContent();
+				strategyName = (eElement.getElementsByTagName("strategyName")).item(0).getTextContent();
+				queueID = (eElement.getElementsByTagName("queueID")).item(0).getTextContent();
+				queueName = (eElement.getElementsByTagName("queueName")).item(0).getTextContent();
+				//ruleID = (eElement.getElementsByTagName("ruleID")).item(0).getTextContent();
+				//ruleName = (eElement.getElementsByTagName("ruleName")).item(0).getTextContent();
+				//alertReason = (eElement.getElementsByTagName("alertReason")).item(0).getTextContent();
+				actionDate = (eElement.getElementsByTagName("actionDate")).item(0).getTextContent();
+				actionTime = (eElement.getElementsByTagName("actionTime")).item(0).getTextContent();
+				alertActionID = (eElement.getElementsByTagName("alertActionID")).item(0).getTextContent();
+				callResult = (eElement.getElementsByTagName("callResult")).item(0).getTextContent();
+				//fraudType = (eElement.getElementsByTagName("fraudType")).item(0).getTextContent();
+				memoText = (eElement.getElementsByTagName("memoText")).item(0).getTextContent();
+				merchantCountryNames = (eElement.getElementsByTagName("merchantCountryNames")).item(0).getTextContent();
+				notes = (eElement.getElementsByTagName("notes")).item(0).getTextContent();
+				systemBlockCode = (eElement.getElementsByTagName("systemBlockCode")).item(0).getTextContent();
+
+		//System.out.println("Inside SFM Action Integration");
+		
+		} catch (Exception e) {
+		e.printStackTrace();
+		}
