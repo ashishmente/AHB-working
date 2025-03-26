@@ -1,0 +1,273 @@
+import java.io.*;
+import java.net.*;
+import java.net.http.*;
+import java.nio.file.*;
+import java.security.*;
+import java.security.cert.X509Certificate;
+import java.time.Duration;
+import java.util.*;
+import javax.crypto.*;
+import javax.net.ssl.*;
+import org.apache.camel.Exchange;
+import org.json.JSONObject;
+import org.w3c.dom.*;
+import org.xml.sax.InputSource;
+import javax.xml.parsers.*;
+import java.util.UUID;
+import java.math.BigDecimal;
+import java.sql.SQLException;
+
+
+public class actionSFM
+{
+	
+	private static Document convertStringToXMLDocument(String xmlString)
+	{
+		//Parser that produces DOM object trees from XML content
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+
+		//API to obtain DOM Document instance
+		DocumentBuilder builder = null;
+		try
+		{
+			//Create DocumentBuilder with default configuration
+			builder = factory.newDocumentBuilder();
+
+			//Parse the content to Document object
+			Document doc = builder.parse(new InputSource(new StringReader(xmlString)));
+			return doc;
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public static void SFMactions(Map<String, Object> requestBody)throws Exception {
+		String truststorePath = "/opt/sas/viya/config/etc/boss/custom-truststore.jks"; 
+		String truststorePassword = "changeit"; 
+		
+		//System.setProperty("https.proxyHost", "webproxy-azuan.vsp.sas.com"); 
+		//System.setProperty("https.proxyPort", "3128"); 
+		
+		// Load the truststore (CA certificates) 
+		KeyStore trustStore = KeyStore.getInstance("JKS"); 
+		try (FileInputStream trustStoreInputStream = new FileInputStream(truststorePath)) { 
+		trustStore.load(trustStoreInputStream, truststorePassword.toCharArray()); 
+		} 
+		
+		// Initialize TrustManagerFactory with the truststore 
+		
+		TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm()); 
+		trustManagerFactory.init(trustStore); 
+			
+		// Create and initialize SSLContext 
+		SSLContext sslContext = SSLContext.getInstance("TLS"); 
+		sslContext.init(null, trustManagerFactory.getTrustManagers(), null); 
+		
+		// Create HttpClient with SSLContext 
+		HttpClient httpClient =  HttpClient.newBuilder() 
+		.version(HttpClient.Version.HTTP_2) 
+		.sslContext(sslContext) // Use the custom SSLContext 
+		.connectTimeout(Duration.ofSeconds (60)) 
+		.build(); 
+		
+		// OAuth 2.0 Token Retrieval 
+		String decisionUrl = "https://api.cit.dtp.alhilalbankuaedev.ae/sas/v1/agent-decisions"; 
+		System.out.println("Preparing to hit the decisionUrl: " + decisionUrl); 
+		
+		// Prepare the request body for token retrieval 
+		System.out.println("decisionUrl request body prepared:"+ requestBody); 
+		String jsonRequestBody = new JSONObject(requestBody).toString();
+        System.out.println("decisionUrl request body prepared: " + jsonRequestBody);
+		
+		
+		HttpRequest decisionRequest = HttpRequest.newBuilder() 
+		.uri(URI.create(decisionUrl)) 
+		.header("Content-Type", "application/json") 
+		.POST(HttpRequest.BodyPublishers.ofString(jsonRequestBody))
+		.build(); 
+		System.out.println("sending decisionRequest..."); 
+		HttpResponse<String>decisionResponse = httpClient.send(decisionRequest, HttpResponse.BodyHandlers.ofString()); 
+		System.out.println("decisionRequest response received:" + decisionResponse.body()); 
+		
+		// Parse the token response 
+		JSONObject decisionJson = new JSONObject(decisionResponse.body());
+		System.out.println("Parsed Response: " + decisionJson.toString(2));
+	}
+
+	public void actionSend (Exchange exchange) throws IndexOutOfBoundsException {
+		try{
+			String textXml = exchange.getIn().getBody(String.class);
+			String[] splitXml = textXml.split("urn:SASFraudManagement:ECMI_1_3\\\">", 2);
+			String xmlPayload = "<ecmi>";
+			xmlPayload = xmlPayload + splitXml[1];
+
+			 Document doc = convertStringToXMLDocument(textXml);
+			doc.getDocumentElement().normalize();
+
+			
+			String username = "", siteID = "", event = "", id = "", version = "", type = "", createTimestamp = "",
+					entityID = "", contactID = "", contactType = "", multiOrg = "", strategyName = "", queueID = "",
+					queueName = "", ruleID = "", ruleVersion = "", ruleName = "", lastCallResult = "", fraudType = "",
+					actionDate = "", actionTime = "", alertActionID = "", callResult = "", groupCode = "", memoText = "",
+					memoType = "", systemBlockCode = "", systemBlockAction = "", transactionBlockCode = "", transactionBlockAction = "";
+			
+			Element rootElement = doc.getDocumentElement();
+			username = rootElement.getElementsByTagName("username").item(0).getTextContent();
+			siteID = rootElement.getElementsByTagName("siteID").item(0).getTextContent();
+			event = rootElement.getElementsByTagName("event").item(0).getTextContent();
+
+		   
+			NodeList alertList = doc.getElementsByTagName("alert");
+			if (alertList.getLength() > 0) {
+				Element alertElement = (Element) alertList.item(0);
+
+				id = alertElement.getElementsByTagName("id").item(0).getTextContent();
+				version = alertElement.getElementsByTagName("version").item(0).getTextContent();
+				type = alertElement.getElementsByTagName("type").item(0).getTextContent();
+				createTimestamp = alertElement.getElementsByTagName("createTimestamp").item(0).getTextContent();
+				entityID = alertElement.getElementsByTagName("entityID").item(0).getTextContent();
+				contactID = alertElement.getElementsByTagName("contactID").item(0).getTextContent();
+				contactType = alertElement.getElementsByTagName("contactType").item(0).getTextContent();
+				multiOrg = alertElement.getElementsByTagName("multiOrg").item(0).getTextContent();
+				strategyName = alertElement.getElementsByTagName("strategyName").item(0).getTextContent();
+				queueID = alertElement.getElementsByTagName("queueID").item(0).getTextContent();
+				queueName = alertElement.getElementsByTagName("queueName").item(0).getTextContent();
+				ruleID = alertElement.getElementsByTagName("ruleID").item(0).getTextContent();
+				ruleVersion = alertElement.getElementsByTagName("ruleVersion").item(0).getTextContent();
+				ruleName = alertElement.getElementsByTagName("ruleName").item(0).getTextContent();
+				lastCallResult = alertElement.getElementsByTagName("lastCallResult").item(0).getTextContent();
+				fraudType = alertElement.getElementsByTagName("fraudType").item(0).getTextContent();
+
+				Element alertActionElement = (Element) alertElement.getElementsByTagName("alertAction").item(0);
+				if (alertActionElement != null) {
+					actionDate = alertActionElement.getElementsByTagName("actionDate").item(0).getTextContent();
+					actionTime = alertActionElement.getElementsByTagName("actionTime").item(0).getTextContent();
+					alertActionID = alertActionElement.getElementsByTagName("alertActionID").item(0).getTextContent();
+					callResult = alertActionElement.getElementsByTagName("callResult").item(0).getTextContent();
+					groupCode = alertActionElement.getElementsByTagName("groupCode").item(0).getTextContent();
+					memoText = alertActionElement.getElementsByTagName("memoText").item(0).getTextContent();
+					memoType = alertActionElement.getElementsByTagName("memoType").item(0).getTextContent();
+					systemBlockCode = alertActionElement.getElementsByTagName("systemBlockCode").item(0).getTextContent();
+					systemBlockAction = alertActionElement.getElementsByTagName("systemBlockAction").item(0).getTextContent();
+					transactionBlockCode = alertActionElement.getElementsByTagName("transactionBlockCode").item(0).getTextContent();
+					transactionBlockAction = alertActionElement.getElementsByTagName("transactionBlockAction").item(0).getTextContent();
+				
+			}
+			
+			String SORDBUrl= props.getProperty("SOR_DB_URL");
+			String sorDBUsername= props.getProperty("SOR_USERNAME");
+			String sorDBPassword= new String(Base64.getDecoder().decode(props.getProperty("SOR_PASSWORD")));
+			
+			
+			Connection conn1=null;
+			Statement stmt1 = null;
+			try{
+				
+			Connection conn1 = DriverManager.getConnection(SORDBUrl, sorDBUsername, sorDBPassword);
+			Statement stmt1 = conn1.createStatement();
+
+			String query = "SELECT INIT_CMX_TRAN_ID, INIT_SMH_ACCT_TYPE, INIT_SMH_ACTIVITY_TYPE, FROM FCM_ALERT where alert_id ='"+id+"'";
+			String tranId1="";
+			String tableName="";
+			String tableNamecard="";
+			String AccountNumber="";
+			String TransactionType="";
+			BigDecimal Amount = BigDecimal.ZERO;
+            BigDecimal Score = BigDecimal.ZERO;
+			
+
+			ResultSet getTranId = stmt1.executeQuery(query);
+			while(getTranId.next())
+			{
+				tranId1 = getTranId.getString("INIT_CMX_TRAN_ID");
+				System.out.println("Transcation id"+ tranId1 );
+				tableName = "FCM_"+getTranId.getString("INIT_SMH_ACCT_TYPE")+getTranId.getString("INIT_SMH_ACTIVITY_TYPE");
+				tableNamecard= "FCM_CC" +getTranId.getString("INIT_SMH_ACTIVITY_TYPE");
+			}
+			} catch (SQLException e) {
+			throw new IOException("Database error occurred", e);
+		}
+			String TDRDBUrl = props.getProperty("TDR_DB_URL");
+			String tdrDBUsername = props.getProperty("TDR_USERNAME");
+			String tdrDBPassword = new String(Base64.getDecoder().decode(props.getProperty("TDR_PASSWORD")));
+			
+			
+			Connection conn2 = null;
+			Statement stmt2 = null;
+			
+			try{
+			Connection conn2 = DriverManager.getConnection(TDRDBUrl, tdrDBUsername, tdrDBPassword);
+			Statement stmt2 = conn2.createStatement();
+
+
+			ResultSet data= stmt2.executeQuery("SELECT aqoAcctNum, smh_client_tran_type, tbt_mod_amt, rur_numeric_001 FROM "+tableName+" where CMX_TRAN_ID ='"+tranId1+"'");
+				while(data.next()) {
+					AccountNumber = data.getString("aqoAcctNum") != null ? data.getString("aqoAcctNum") : "";
+					TransactionType = data.getString("smh_client_tran_type") != null ? data.getString("smh_client_tran_type") : "";
+					Amount = data.getBigDecimal("tbt_mod_amt") != null ? data.getBigDecimal("tbt_mod_amt") : BigDecimal.ZERO;
+					Score = data.getBigDecimal("rur_numeric_001") != null ? data.getBigDecimal("rur_numeric_001") : BigDecimal.ZERO;
+				}
+				System.out.println("Account Number: " + AccountNumber + 
+                   ", Transaction Type: " + TransactionType + 
+                   ", Amount: " + Amount + 
+                   ", Score: " + Score);
+
+			ResultSet data1= stmt2.executeQuery("SELECT hct_card_purpose, hqo_card_num FROM "+tableNamecard+" where CMX_TRAN_ID ='"+tranId1+"'");
+				while(data1.next()) {
+					CardNumber = data.getString("hqo_card_num") != null ? data.getString("hqo_card_num") : "";
+                    CardType = data.getString("hct_card_purpose") != null ? data.getString("hct_card_purpose") : "";
+				}
+				System.out.println("Card Number: " + CardNumber + ", Card Type: " + CardType);
+				} catch (SQLException e) {
+			throw new IOException("Database error occurred", e);
+		}
+				
+				
+			String uniqueMessageID = UUID.randomUUID().toString();
+					List<String> actionCodes = new ArrayList<>();
+					actionCodes.add(systemBlockCode);
+					Map<String, Object> requestBody = new HashMap<>();
+					requestBody.put("alertId", id);
+					requestBody.put("agentId", agentId);
+					requestBody.put("transactionId", tranId1);
+					requestBody.put("transactionType", TransactionType);
+					requestBody.put("eventName", event);
+					requestBody.put("actionCodes", actionCodes);
+					requestBody.put("customerID", entityID);
+					requestBody.put("uniqueMessageID", uniqueMessageID);
+					requestBody.put("dateAndTime", actionDate + "T" + actionTime + ".0000000+00:00");
+					requestBody.put("score", Score);
+
+					// Creating accounts list
+					List<Map<String, Object>> accounts = new ArrayList<>();
+					Map<String, Object> account = new HashMap<>();
+					account.put("accountNumber", "string"); // Replace with actual variable
+					account.put("amount", Amount); // Replace with actual variable
+					accounts.add(account);
+					requestBody.put("accounts", accounts);
+
+					// Creating cards list
+					List<Map<String, String>> cards = new ArrayList<>();
+					Map<String, String> card = new HashMap<>();
+					card.put("cardNumber", "string"); // Replace with actual variable
+					card.put("cardType", "string"); // Replace with actual variable
+					cards.add(card);
+					requestBody.put("cards", cards);
+
+					// Creating additional fields list
+					List<Map<String, String>> additionalFields = new ArrayList<>();
+					Map<String, String> additionalField = new HashMap<>();
+					additionalField.put("name", "string"); // Replace with actual variable
+					additionalField.put("value", "string"); // Replace with actual variable
+					additionalFields.add(additionalField);
+					requestBody.put("additionalFields", additionalFields);
+				
+					actionSFM.SFMactions(requestBody);
+				}catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
