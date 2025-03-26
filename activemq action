@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:lang="http://www.springframework.org/schema/lang"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+       http://camel.apache.org/schema/spring
+       http://camel.apache.org/schema/spring/camel-spring.xsd
+       http://www.springframework.org/schema/lang
+       http://www.springframework.org/schema/lang/spring-lang.xsd">
+
+
+    <bean id="activemq1" class="org.apache.camel.component.jms.JmsComponent">
+        <property name="configuration" ref="jmsConfig4ActiceMq1" />
+    </bean>
+
+
+	<!--Initiating groovy file for integration between SFM to VI for Confirmed Fraud Alerts-->
+	<lang:groovy id="actionHD" script-source="classpath:groovy/actionSFM.groovy"/> 
+
+    <routeContext id="actionSFMRoute" xmlns="http://camel.apache.org/schema/spring">
+
+        <route id="sfmActionIntegration">
+            <from uri="activemq1:queue:ECMI_SEND"/>
+			      <log message="Message is: ${body}" loggingLevel="INFO"/>
+			
+			<!--Calling groovy class to send JSON request for demographic details and receive response /-->
+            <bean ref="actionHD" method="actionSend"/>
+
+        </route>
+		
+    </routeContext>
+
+</beans>
