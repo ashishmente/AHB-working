@@ -37,3 +37,10 @@ try
 		} catch (Exception e) {
 		e.printStackTrace();
 		}
+
+SOR_DB_URL = jdbc:oracle:thin:@//ahb03au.vsp.sas.com:1526/ahbdev02.vsp.sas.com
+TDR_DB_URL = jdbc:oracle:thin:@//ahb03au.vsp.sas.com:1526/ahbdev03.vsp.sas.com
+
+mehcore/pRubjwLh6F9Sk6tVSJy4Vwfgq@ahbdev01.vsp.sas.com
+fcmcore/jOo8NSyzQRVRKMnjHxZQNHlfj@ahbdev02.vsp.sas.com
+tdrcore/wnwq3blHHIkJU8l6HDZ0zNgdx@ahbdev03.vsp.sas.com
